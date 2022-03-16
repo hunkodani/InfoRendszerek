@@ -1,0 +1,69 @@
+<div class="container text-center" id="main-content">
+    <h4 class="text-center mt-3 mb-5">Kiadás felvitele</h4>
+    <form style="width: 80%; margin: auto;" [formGroup]="expanseForm">
+        <div class="row mb-3">
+            <div class="col-md-3 text-start">
+                Költség leírása:
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" formControlName="description" placeholder="Költség leírása, pl. lépcsőház felújítás">
+                <div class="text-danger text-start" *ngIf="description?.invalid && (description?.dirty || description?.touched)">
+                    <small *ngIf="description?.errors?.['required']">Költség leírás megadása kötelező.</small>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-3 text-start">
+                Költség számolás formája:
+            </div>
+            <div class="col">
+                <select class="form-select" aria-label="Amount calculate select" formControlName="expanseType">
+                    <option value="" disabled selected>Költés forma választás</option>
+                    <option value="1">Alapterület alapján</option>
+                    <option value="2">Teljes költség szétosztása alapján</option>
+                </select>
+                <div class="text-danger text-start" *ngIf="expanseType?.invalid && (expanseType?.dirty || expanseType?.touched)">
+                    <small *ngIf="expanseType?.errors?.['required']">Költségtípus kiválasztása kötelező.</small>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-3 text-start">
+                Költség összege:
+            </div>
+            <div class="col">
+                <input type="number" class="form-control" formControlName="amount">
+                <div class="text-danger  text-start" *ngIf="amount?.invalid && (amount?.dirty || amount?.touched)">
+                    <small *ngIf="amount?.errors?.['required']">Az összeg megadása kötelező.</small>
+                    <small *ngIf="amount?.errors?.['min']">Az összegnek nagyobbnak kell lennie 0-nál.</small>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-3 text-start">
+                Költség dátuma:
+            </div>
+            <div class="col">
+                <input type="datetime-local" [max]="maxDate" class="form-control"  formControlName="datetime">
+                <div class="text-danger text-start" *ngIf="datetime?.invalid && (datetime?.dirty || datetime?.touched)">
+                    <small *ngIf="datetime?.errors?.['required']">Dátum megadása kötelező.</small>
+                    <small *ngIf="datetime?.errors?.['dateInvalid']">
+                        A dátum nem lehet a jelenlegi dátumnál később, sem a legutóbbi tranzakciónál hamarabb ({{transactionDate}}).
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mb-3">
+            <button class="btn btn-primary mb-3" style="width: 100%; border-radius: 20px;" 
+                    (click)="ToSummary()" [disabled]="expanseForm?.invalid">
+                Tovább
+            </button>
+            <a routerLink="/main-menu" class="btn btn-danger" style="width: 100%; border-radius: 20px;">Vissza a főmenübe</a>
+        </div>
+    </form>
+</div>
+<app-expanse-summary *ngIf="summary"
+                     [expansetype]="this.expanseForm.controls['expanseType'].value"
+                     [amount]="this.expanseForm.controls['amount'].value"
+                     [datetime]="this.expanseForm.controls['datetime'].value"
+                     [description]="this.expanseForm.controls['description'].value"></app-expanse-summary>

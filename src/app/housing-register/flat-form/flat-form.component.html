@@ -1,0 +1,47 @@
+<h4 class="text-center">Új lakás felvitele</h4>
+<form [formGroup]="flatForm">
+    <div class="form-floating mb-3">
+        <input type="number" class="form-control" id="floatingInput" formControlName="floor">
+        <label for="floatingInput">Emelet</label>
+        <div class="text-danger" *ngIf="floor?.invalid && (floor?.dirty || floor?.touched)">
+            <small *ngIf="floor?.errors?.['required']">Emelet megadása kötelező.</small>
+            <small *ngIf="floor?.errors?.['min']">Az emelet értéke 0 vagy annál nagyobb lehet csak.</small>
+        </div>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="number" class="form-control" id="floatingInput" formControlName="door">
+        <label for="floatingInput">Ajtó</label>
+        <div class="text-danger" *ngIf="door?.invalid && (door?.dirty || door?.touched)">
+            <small *ngIf="door?.errors?.['required']">Ajtó szám megadása kötelező.</small>
+            <small *ngIf="door?.errors?.['min']">Az ajtó számának 0-nál nagyobbnak kell lennie.</small>
+        </div>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="number" class="form-control" id="floatingInput" formControlName="area">
+        <label for="floatingInput">Alapterület</label>
+        <div class="text-danger" *ngIf="area?.invalid && (area?.dirty || area?.touched)">
+            <small *ngIf="area?.errors?.['required']">Alapterület megadása kötelező.</small>
+            <small *ngIf="door?.errors?.['min']">Az alapterületnek 0-nál nagyobbnak kell lennie.</small>
+        </div>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="number" class="form-control" id="floatingInput" formControlName="space">
+        <label for="floatingInput">Légtér</label>
+        <div class="text-danger" *ngIf="space?.invalid && (space?.dirty || space?.touched)">
+            <small *ngIf="space?.errors?.['required']">Légtér megadása kötelező.</small>
+            <small *ngIf="door?.errors?.['min']">A légtérnek 0-nál nagyobbnak kell lennie.</small>
+        </div>
+    </div>
+    <div class="text-center mb-2">
+        <button class="btn btn-primary mb-3" style="width: 100%;" (click)="createFlat()" [disabled]="flatForm?.invalid">Felvitel</button>
+        <button class="btn btn-danger" style="width: 100%;" (click)="cancel()">Vissza</button>
+    </div>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="errorMessage">
+        {{errorMessage}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="closePopup()"></button>
+      </div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="successMessage">
+        {{successMessage}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="closePopup()"></button>    
+    </div>
+</form>

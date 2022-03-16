@@ -1,0 +1,7 @@
+#main-content {
+    min-height: 70vh;
+    width: 100%; 
+    border: 1px solid black; 
+    border-radius: 100px;
+    background-color: #e7e7e7;
+}

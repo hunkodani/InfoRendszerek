@@ -1,0 +1,60 @@
+<div class="container text-center" id="main-content" style="background-color: #e7e7e7;">
+    <h4 class="text-center mt-3 mb-5">Befizetés</h4>
+    <form style="width: 80%; margin: auto;" [formGroup]="paymentForm">
+        <div class="row mb-5">
+            <div class="col-md-3 text-start">
+                Lakó neve:
+            </div>
+            <div class="col">
+                <select class="form-select" aria-label="Residents select" formControlName="person" (change)="GetTransactions()">
+                    <option value="" disabled selected>Személy választás</option>
+                    <option *ngFor="let resident of people" [ngValue]="resident">{{resident.name}}</option>
+                </select>
+                <div class="text-danger text-start" *ngIf="person?.invalid && (person?.dirty || person?.touched)">
+                    <small *ngIf="person?.errors?.['required']">Lakos kiválasztása kötelező.</small>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-3 text-start">
+                Befizetés összege:
+            </div>
+            <div class="col">
+                <input type="number" class="form-control" formControlName="amount">
+                <div class="text-danger  text-start" *ngIf="amount?.invalid && (amount?.dirty || amount?.touched)">
+                    <small *ngIf="amount?.errors?.['required']">Az összeg megadása kötelező.</small>
+                    <small *ngIf="amount?.errors?.['min']">Az összegnek nagyobbnak kell lennie 0-nál.</small>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5"  *ngIf="seeDate">
+            <div class="col-md-3 text-start">
+                Befizetés dátuma:
+            </div>
+            <div class="col">
+                <input type="datetime-local" [min]="minDate" [max]="maxDate" class="form-control" formControlName="datetime">
+                <div class="text-danger text-start" *ngIf="datetime?.invalid && (datetime?.dirty || datetime?.touched)">
+                    <small *ngIf="datetime?.errors?.['required']">Dátum megadása kötelező.</small>
+                    <small *ngIf="datetime?.errors?.['dateInvalid'] === true">
+                        A dátum nem lehet a mostani dátumnál később, sem a személy legutóbbi tranzakciójánál hamarabb ({{transactionDate}}).
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mb-2">
+            <button class="btn btn-primary mb-3" style="width: 100%; border-radius: 20px;" 
+                    (click)="addPayment()" [disabled]="paymentForm?.invalid">
+                Befizetés hozzáadás
+            </button>
+            <a routerLink="/main-menu" class="btn btn-danger" style="width: 100%; border-radius: 20px;">Vissza a főmenübe</a>
+        </div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="errorMessage">
+            {{errorMessage}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="closePopup()"></button>
+        </div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="successMessage">
+            {{successMessage}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="closePopup()"></button>    
+        </div>
+    </form>
+</div>

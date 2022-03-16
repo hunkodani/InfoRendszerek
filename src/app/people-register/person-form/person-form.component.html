@@ -1,0 +1,46 @@
+<h4 class="text-center">Új lakó beköltözése</h4>
+<form [formGroup]="personForm">
+    <div class="form-floating mb-3">
+        <select class="form-select" id="floatingInput" aria-label="Flat select" formControlName="flat">
+            <option value="" disabled selected>Lakás választás</option>
+            <option *ngFor="let flat of flats" value="{{flat.id}}">{{flat.floor}}-{{flat.door}}</option>
+        </select>
+        <label for="floatingInput">Lakás</label>
+        <div class="text-danger" *ngIf="flat?.invalid && (flat?.dirty || flat?.touched)">
+            <small *ngIf="flat?.errors?.['required']">Lakás kiválasztása kötelező.</small>
+        </div>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput" placeholder="John Smith" formControlName="name">
+        <label for="floatingInput">Név</label>
+        <div class="text-danger" *ngIf="name?.invalid && (name?.dirty || name?.touched)">
+            <small *ngIf="name?.errors?.['required']">Név megadása kötelező.</small>
+            <small *ngIf="name?.errors?.['pattern']">Név csak alfanumerikus karaktert tartalmazhat.</small>
+        </div>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="number" class="form-control" id="floatingInput" placeholder="0" formControlName="accountBalance">
+        <label for="floatingInput">Számlaegyenleg</label>
+        <div class="text-danger" *ngIf="accountBalance?.invalid && (accountBalance?.dirty || accountBalance?.touched)">
+            <small *ngIf="accountBalance?.errors?.['required']">Számla egyenleg megadása kötelező.</small>
+        </div>
+    </div>
+    <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled" checked disabled>
+        <label class="form-check-label" for="flexCheckCheckedDisabled">
+          Itt lakik-e?
+        </label>
+    </div>
+    <div class="text-center mb-2">
+        <button class="btn btn-primary mb-3" style="width: 100%;" (click)="createPerson()" [disabled]="personForm?.invalid">Felvitel</button>
+        <button class="btn btn-danger" style="width: 100%;" (click)="cancel()">Vissza</button>
+    </div>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="errorMessage">
+        {{errorMessage}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="closePopup()"></button>
+      </div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="successMessage">
+        {{successMessage}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="closePopup()"></button>    
+    </div>
+</form>

@@ -1,0 +1,40 @@
+
+<div class="ms-3">
+    <form [formGroup]="modifyForm">
+        <div class="row">
+            <div class="col-md-3">
+                Emelet:
+            </div>
+            <div class="col">
+                {{flat.floor}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                Ajtó:
+            </div>
+            <div class="col">
+                {{flat.door}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                Alapterület:
+            </div>
+            <div class="col">
+                <input  type="text" class="" id="flatArea" formControlName="area"/>m<sup>2</sup>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                Légtér
+            </div>
+            <div class="col">
+                <input type="text" class="" id="space" formControlName="space"/>m<sup>3</sup>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary" style="float: right;" *ngIf="isDisabled" (click)="enableModify()">Módosítás</button>
+        <button type="button" class="btn btn-success" style="float: right;" *ngIf="!isDisabled" (click)="modifyFlat()">Végrehajt</button>
+        <button type="button" class="btn btn-danger" style="float: right;" *ngIf="!isDisabled" (click)="disableModify()">Mégse</button>
+     </form>
+</div>
