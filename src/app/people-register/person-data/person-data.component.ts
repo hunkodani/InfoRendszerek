@@ -15,7 +15,7 @@ export class PersonDataComponent implements OnInit {
   @Input() person!: Person;
   @Input() flats!: Housing[];
   @Output() update = new EventEmitter;
-  flat: Housing = {floor: 0, door: 0, area: 0,space: 0};
+  flat: Housing = {floor: -1, door: -1, area: 0,space: 0};
   isDisabled = true;
 
   modifyForm: FormGroup = this.formBuilder.group({

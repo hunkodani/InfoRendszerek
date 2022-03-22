@@ -100,40 +100,56 @@ export class ReportsComponent implements OnInit {
       await this.getTransactionsByName();
       this.table1 = true;
       this.table2 = false;
-      this.calculateDebt();
+      await this.calculateDebt();
     } else {
       await this.getAllTransaction();
       this.table2 = true;
       this.table1 = false;
-      this.calculatePersonData();
+      await this.calculatePersonData();
       this.calculateHouseData();
     }
   }
 
-  calculateDebt(){
-    if (this.transactions[0].types === "payment") {
-      this.openingDebt = this.transactions[0].balanceAfter - this.transactions[0].amount;
-      if (this.openingDebt > 0) {
-        this.openingDebt = 0;
+  async calculateDebt() {
+    if (this.transactions.length != 0) {
+      if (this.transactions[0].types === "payment") {
+        this.openingDebt = this.transactions[0].balanceAfter - this.transactions[0].amount;
+        if (this.openingDebt > 0) {
+          this.openingDebt = 0;
+        }
+      } else {
+        this.openingDebt = this.transactions[0].balanceAfter + this.transactions[0].amount;
+        if (this.openingDebt > 0) {
+          this.openingDebt = 0;
+        }
       }
+      this.closingDebt = this.transactions[this.transactions.length - 1].balanceAfter;
     } else {
-      this.openingDebt = this.transactions[0].balanceAfter + this.transactions[0].amount;
-      if (this.openingDebt > 0) {
-        this.openingDebt = 0;
+      if (this.person) {
+        let transactions = await this.transactionService.loadTransactionsByResidentId(parseInt(this.dateForm.controls['person'].value));
+        let overDate = Math.max(...transactions.map(item => new Date(item.date).valueOf()));
+        if (overDate < new Date(this.dateForm.controls['datetime2'].value).valueOf()) {
+          let opening = this.people.find(item => item.id === parseInt(this.dateForm.controls['person'].value))?.accountBalance;
+          if (opening) {
+            this.openingDebt = opening;
+            this.closingDebt = opening;
+          }
+        } else {
+          this.openingDebt = 0;
+          this.closingDebt = 0;
+        }
       }
     }
-
-    this.closingDebt = this.transactions[this.transactions.length-1].balanceAfter;
     if (this.closingDebt > 0) {
       this.closingDebt = 0;
     }
   }
 
-  calculatePersonData() {
+  async calculatePersonData() {
     this.residentData = [];
     for (let index = 0; index < this.people.length; index++) {
-      const element = this.people[index];
-      let allTrans = this.transactions.filter(item => item.resident.id === element.id);
+      const person = this.people[index];
+      let allTrans = this.transactions.filter(item => item.resident.id === person.id);
       let tmp: Data = new Data();
       if (allTrans.length !== 0) {
         if (allTrans[0].types === "payment") {
@@ -156,10 +172,33 @@ export class ReportsComponent implements OnInit {
           }}, 0);
         this.residentData.push(tmp);
       } else {
-        tmp.accumulatedExpanse = 0;
-        tmp.accumulatedIncome = 0;
-        tmp.closingBalance = 0;
-        tmp.openingBalance = 0;
+        let transactions = await this.transactionService.loadTransactions();
+        let overDate = Math.max(...transactions.map(item => new Date(item.date).valueOf()));
+        if (overDate < new Date(this.dateForm.controls['datetime2'].value).valueOf()) {
+          let opening = person.accountBalance;
+          let closing = person.accountBalance;
+          if (opening && closing) {
+            tmp.accumulatedExpanse = 0;
+            tmp.accumulatedIncome = 0;
+            tmp.closingBalance = closing;
+            tmp.openingBalance = opening;
+          }
+        } else {
+          let filteredTrns = transactions.filter(item => item.resident.name === person.name);
+          let minDate = Math.min(...transactions.map(item => new Date(item.date).valueOf()));
+          let minTrns = transactions.find(item => new Date(item.date).valueOf() === minDate);
+          if (minTrns) {
+            if (minTrns.types === "payment") {
+              tmp.openingBalance = minTrns.balanceAfter - minTrns.amount;
+              tmp.closingBalance = tmp.openingBalance;
+            } else {
+              tmp.openingBalance = minTrns.balanceAfter + minTrns.amount;
+              tmp.closingBalance = tmp.openingBalance;
+            }
+          } alert(minTrns?.balanceAfter + ' ' + minTrns?.amount);
+          tmp.accumulatedExpanse = 0;
+          tmp.accumulatedIncome = 0;
+        }
         this.residentData.push(tmp);
       }
       
@@ -186,7 +225,7 @@ export class ReportsComponent implements OnInit {
       let endDate = new Date(this.dateForm.controls['datetime2'].value).valueOf();
       if (startDate >= endDate) {
         return { 'dateInvalid': true};
-    }
+      }
     }
     /*if (startDate >= new Date().valueOf()) {
       return { 'dateInvalid': true};
