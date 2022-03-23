@@ -33,8 +33,10 @@
                 <input type="text" class="" id="space" formControlName="space"/>m<sup>3</sup>
             </div>
         </div>
-        <button type="button" class="btn btn-primary" style="float: right;" *ngIf="isDisabled" (click)="enableModify()">Módosítás</button>
-        <button type="button" class="btn btn-success" style="float: right;" *ngIf="!isDisabled" (click)="modifyFlat()">Végrehajt</button>
-        <button type="button" class="btn btn-danger" style="float: right;" *ngIf="!isDisabled" (click)="disableModify()">Mégse</button>
+        <span *ngIf="isAdmin">
+            <button type="button" class="btn btn-primary" style="float: right;" *ngIf="isDisabled" (click)="enableModify()">Módosítás</button>
+            <button type="button" class="btn btn-success" style="float: right;" *ngIf="!isDisabled" (click)="modifyFlat()">Végrehajt</button>
+            <button type="button" class="btn btn-danger" style="float: right;" *ngIf="!isDisabled" (click)="disableModify()">Mégse</button>
+        </span>
      </form>
 </div>

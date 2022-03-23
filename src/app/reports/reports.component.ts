@@ -195,7 +195,7 @@ export class ReportsComponent implements OnInit {
               tmp.openingBalance = minTrns.balanceAfter + minTrns.amount;
               tmp.closingBalance = tmp.openingBalance;
             }
-          } alert(minTrns?.balanceAfter + ' ' + minTrns?.amount);
+          }
           tmp.accumulatedExpanse = 0;
           tmp.accumulatedIncome = 0;
         }

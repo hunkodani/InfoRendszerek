@@ -6,12 +6,15 @@
         <a routerLink="/people-register" class="btn btn-primary btn-lg"> Lakók nyilvántartása</a>
     </div>
     <div class="my-2 text-center">
-        <a routerLink="/payment-register" class="btn btn-primary btn-lg">Egyéni befizetések</a>
+        <a routerLink="/payment-register" class="btn btn-primary btn-lg" *ngIf="isAdmin">Egyéni befizetések</a>
     </div>
     <div class="my-2 text-center">
-        <a routerLink="/expanse-register" class="btn btn-primary btn-lg">Költségek elosztása</a>
+        <a routerLink="/expanse-register" class="btn btn-primary btn-lg" *ngIf="isAdmin">Költségek elosztása</a>
     </div>
     <div class="my-2 text-center">
         <a routerLink="/reports" class="btn btn-primary btn-lg">Kimutatások</a>
+    </div>
+    <div class="mb-2 text-center mt-5">
+        <a routerLink="/login" class="btn btn-primary btn-lg" (click)="logout()">Kilépés</a>
     </div>
 </div>

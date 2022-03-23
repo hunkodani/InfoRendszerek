@@ -13,7 +13,7 @@ export function getRouter() {
     const transactionController = new TransactionController();
 
     router.get('/users', userController.getAll);
-    router.get('/users/:id', userController.getOne);
+    router.get('/user?:search', userController.getUserRole);
     router.post('/users', userController.create);
     router.put('/users', userController.update);
     router.delete('/users/:id', userController.delete);
@@ -36,7 +36,6 @@ export function getRouter() {
     router.post('/transactions', transactionController.create);
     router.put('/transactions', transactionController.update);
     router.delete('/transactions/:id', transactionController.delete);
-
 
     return router;
 }

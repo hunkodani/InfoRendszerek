@@ -11,6 +11,7 @@ import { FlatService } from 'src/app/Services/flat.service';
 export class FlatComponent implements OnInit {
 
   @Input() flat!: Housing;
+  @Input() isAdmin!: boolean;
   @Output() update = new EventEmitter;
   isDisabled = true;
 

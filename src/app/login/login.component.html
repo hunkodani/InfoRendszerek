@@ -1,0 +1,33 @@
+<div class="d-flex text-center justify-content-center fadeInDown">
+    <div id="formContent">
+      <div class="fadeIn first static">
+        <img src="/assets/avatar.png" id="icon" alt="User Icon" />
+        <h2 class="mt-2">Bejelentkezés</h2>
+      </div>
+      <form [formGroup]="loginForm" class="dynamic">
+        <div class="form-floating mb-3 fadeIn second">
+            <input type="text" class="form-control" id="floatingInput" formControlName="username" >
+            <label for="floatingInput">Felhsználónév</label>
+            <div class="text-danger" *ngIf="username?.invalid && (username?.dirty || username?.touched)">
+                <small *ngIf="username?.errors?.['required']">Felhasználónév megadása kötelező.</small>
+            </div>
+        </div>
+        <div class="form-floating mb-3 fadeIn third">
+            <input type="password" class="form-control" id="floatingPassword" formControlName="password">
+            <label for="floatingPassword">Jelszó</label>
+            <div class="text-danger" *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+                <small *ngIf="password?.errors?.['required']">Jelszó megadása kötelező.</small>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary form-control fadeIn fourth mt-3" (click)="login()" 
+                [disabled]="loginForm?.invalid" style="border-radius: 10px;">
+            Bejelentkezés
+        </button>
+        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert" *ngIf="errorMessage">
+            {{errorMessage}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="closePopup()"></button>
+        </div>
+      </form>
+  
+    </div>
+  </div>

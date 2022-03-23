@@ -1,8 +1,10 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-4 d-flex align-items-center justify-content-center mt-2" style="border: 1px solid #000000; height: 70vh;">
+        <div class="col-md-4 d-flex align-items-center justify-content-center mt-2" style="border: 1px solid #000000; height: 70vh;"
+             *ngIf="isAdmin">
             <button type="button" class="btn btn-success btn-lg" (click)="activateForm()" [hidden]="isFormActive">Lakás felvitel</button>
-            <app-flat-form [hidden]="!isFormActive" (isHidden)="deactivateForm($event)" (update)="getAllFlats()" style="width: 100%;"></app-flat-form>
+            <app-flat-form [hidden]="!isFormActive" (isHidden)="deactivateForm($event)" 
+                            (update)="getAllFlats()" style="width: 100%;"></app-flat-form>
         </div>
         <div class="col-md-7">
             <table class="table table-striped">
@@ -12,7 +14,7 @@
                 <tbody>
                     <tr *ngFor="let flat of flats">
                         <td>
-                            <app-flat [flat]="flat" (update)="getAllFlats()"></app-flat>
+                            <app-flat [flat]="flat" (update)="getAllFlats()" [isAdmin]="isAdmin"></app-flat>
                         </td>
                     </tr>
                 </tbody>

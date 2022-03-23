@@ -15,6 +15,7 @@ import { ExpanseRegisterComponent } from './expanse-register/expanse-register.co
 import { HttpClientModule } from '@angular/common/http';
 import { ExpanseSummaryComponent } from './expanse-register/expanse-summary/expanse-summary.component';
 import { ReportsComponent } from './reports/reports.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ReportsComponent } from './reports/reports.component';
     PaymentRegisterComponent,
     ExpanseRegisterComponent,
     ExpanseSummaryComponent,
-    ReportsComponent
+    ReportsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

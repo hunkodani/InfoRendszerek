@@ -14,6 +14,7 @@ export class PersonDataComponent implements OnInit {
 
   @Input() person!: Person;
   @Input() flats!: Housing[];
+  @Input() isAdmin!: boolean;
   @Output() update = new EventEmitter;
   flat: Housing = {floor: -1, door: -1, area: 0,space: 0};
   isDisabled = true;

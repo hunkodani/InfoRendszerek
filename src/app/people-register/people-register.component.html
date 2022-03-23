@@ -1,6 +1,7 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-4 d-flex align-items-center justify-content-center mt-2" style="border: 1px solid #000000; height: 70vh;">
+        <div class="col-md-4 d-flex align-items-center justify-content-center mt-2" style="border: 1px solid #000000; height: 70vh;"
+             *ngIf="isAdmin">
             <button type="button" class="btn btn-success btn-lg" (click)="activateForm()" [hidden]="isFormActive">Költözés</button>
             <app-person-form [hidden]="!isFormActive" (isHidden)="deactivateForm($event)" (update)="getAllPerson(); getAllFlats();" style="width: 100%;"></app-person-form>
         </div>
@@ -12,7 +13,8 @@
                 <tbody>
                     <tr *ngFor="let person of people">
                         <td>
-                            <app-person-data [person]="person" [flats]="flats" (update)="getAllPerson(); getAllFlats();"></app-person-data>
+                            <app-person-data [person]="person" [flats]="flats" (update)="getAllPerson(); getAllFlats();"
+                                              [isAdmin]="isAdmin"></app-person-data>
                         </td>
                     </tr>
                 </tbody>
