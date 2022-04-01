@@ -48,6 +48,7 @@ export abstract class Controller {
     delete = async (req, res) => {
         try {
             const id = req.params.id;
+            
             const entity = await this.repository.findOne(id);
 
             if (!entity) {

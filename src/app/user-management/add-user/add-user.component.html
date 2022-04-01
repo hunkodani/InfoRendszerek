@@ -1,0 +1,40 @@
+<h4 class="text-center">Új felhasnzáló</h4>
+<form [formGroup]="personForm">
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput name" placeholder="user1" formControlName="username">
+        <label for="floatingInput">Felhasználónév</label>
+        <div class="text-danger" *ngIf="username?.invalid && (username?.dirty || username?.touched)">
+            <small *ngIf="username?.errors?.['required']">Felhasnzálónév megadása kötelező.</small>
+        </div>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="floatingInput pass" placeholder="pass" formControlName="password">
+        <label for="floatingInput">Jelszó</label>
+        <div class="text-danger" *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+            <small *ngIf="password?.errors?.['required']">Jelszó megadása kötelező.</small>
+        </div>
+    </div>
+    <div class="form-floating mb-3">
+        <select class="form-select" id="floatingInput" aria-label="Role select" formControlName="role">
+            <option value="" disabled selected>Jogosultság választás</option>
+            <option value=0>admin</option>
+            <option value=1>user</option>
+        </select>
+        <label for="floatingInput">Jogosultsági szint</label>
+        <div class="text-danger" *ngIf="role?.invalid && (role?.dirty || role?.touched)">
+            <small *ngIf="role?.errors?.['required']">Jogosultsági szint kiválasztása kötelező.</small>
+        </div>
+    </div>
+    <div class="text-center mb-2">
+        <button class="btn btn-primary mb-3" style="width: 100%;" (click)="createPerson()" [disabled]="personForm?.invalid">Felvitel</button>
+        <button class="btn btn-danger" style="width: 100%;" (click)="cancel()">Vissza</button>
+    </div>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="errorMessage">
+        {{errorMessage}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="closePopup()"></button>
+      </div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="successMessage">
+        {{successMessage}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="closePopup()"></button>    
+    </div>
+</form>

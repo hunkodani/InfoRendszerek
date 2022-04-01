@@ -25,4 +25,5 @@ export class UserController extends Controller {
             this.handleError(res);
         }
     }
+    
 }

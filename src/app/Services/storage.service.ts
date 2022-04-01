@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
 import { userRoles } from '../Models/userRoles';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +10,10 @@ export class StorageService {
   name !: string;
   role !: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private userService: UserService) { }
 
   async authenticateUser(username: string, passw: string) {
-    let roleNum = await this.FindUser(username, passw);
+    let roleNum = await this.userService.FindUser(username, passw);
     if (typeof roleNum === 'number') {
       let tmp = parseInt(roleNum);
       this.setAuthentication(username, userRoles[tmp]);
@@ -40,11 +39,5 @@ export class StorageService {
   deleteAuthentication() {
     sessionStorage.removeItem('name');
     sessionStorage.removeItem('role');
-  }
-
-  async FindUser(username: string, passw: string): Promise<string | null> {
-    return lastValueFrom(this.http.get<string>('/api/user', {
-      params: {name: username, pass: passw}
-    }));
   }
 }

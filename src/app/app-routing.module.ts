@@ -7,6 +7,7 @@ import { MainMenuComponent } from './main-menu/main-menu.component';
 import { PaymentRegisterComponent } from './payment-register/payment-register.component';
 import { PeopleRegisterComponent } from './people-register/people-register.component';
 import { ReportsComponent } from './reports/reports.component';
+import { UserManagementComponent } from './user-management/user-management.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'people-register', component: PeopleRegisterComponent },
   { path: 'payment-register', component: PaymentRegisterComponent },
   { path: 'expanse-register', component: ExpanseRegisterComponent },
-  { path: 'reports', component: ReportsComponent }
+  { path: 'reports', component: ReportsComponent },
+  { path: 'user-management', component: UserManagementComponent}
 ];
 
 @NgModule({

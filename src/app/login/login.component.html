@@ -7,7 +7,7 @@
       <form [formGroup]="loginForm" class="dynamic">
         <div class="form-floating mb-3 fadeIn second">
             <input type="text" class="form-control" id="floatingInput" formControlName="username" >
-            <label for="floatingInput">Felhsználónév</label>
+            <label for="floatingInput">Felhasználónév</label>
             <div class="text-danger" *ngIf="username?.invalid && (username?.dirty || username?.touched)">
                 <small *ngIf="username?.errors?.['required']">Felhasználónév megadása kötelező.</small>
             </div>

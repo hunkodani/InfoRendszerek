@@ -1,0 +1,23 @@
+<div class="ms-3">
+    <form [formGroup]="modifyForm">
+        <div class="row">
+            <div class="col-md-3">
+                Név:
+            </div>
+            <div class="col">
+                {{user.username}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                Jogosultság:
+            </div>
+            <div class="col">
+                {{user.role === 0? "admin": "user"}}
+            </div>
+        </div>
+        <span>
+            <button type="button" class="btn btn-danger" style="float: right;" (click)="deleteUser()">Törlés</button>
+        </span>
+    </form>
+</div>
