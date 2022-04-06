@@ -51,7 +51,7 @@ export class AddUserComponent implements OnInit {
       const userAdded = await this.userService.createUser(user);
       this.successMessage = `Felhasználó hozzáadva a következő id alatt: ${userAdded.id}`;
       //this.isHidden.emit(true);
-      this.personForm.reset({name: '', accountBalance: 0});
+      this.personForm.reset({name: '', role: 0});
       this.update.emit(true);
     } catch (err) {
       if (err instanceof Error) {
@@ -62,7 +62,7 @@ export class AddUserComponent implements OnInit {
 
   cancel() {
     this.isHidden.emit(true);
-    this.personForm.reset({name: '', accountBalance: 0});
+    this.personForm.reset({name: '', role: 0});
     this.successMessage = "";
     this.errorMessage = "";
   }
